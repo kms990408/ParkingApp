@@ -1,6 +1,6 @@
 import React from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native'; // Navigation 사용을 위한 import
 
 export default function ClientMenu() {
@@ -15,18 +15,24 @@ export default function ClientMenu() {
 
   return (
     <View style={[styles.container, { backgroundColor: 'white' }]}>
-      <Text style={styles.title}>사용자 메뉴</Text>
-
       <View style={styles.buttonContainer}>
         <TouchableOpacity 
           style={styles.button}
           onPress={handleSearchButtonClick2}>
+           <Image 
+           source={require('../assets/park1.png')} 
+           style={{ width: 120, height: 120 , color: 'white', marginBottom: 15 }} // 원하는 너비와 높이로 설정
+           />
           <Text style={styles.buttonText}>주차 공간 확인</Text>
         </TouchableOpacity>
         <TouchableOpacity 
           style={styles.button}
           onPress={handleSearchButtonClick} // "내 차량 위치 찾기" 버튼 클릭 시 이벤트 핸들러 호출
         >
+          <Image 
+           source={require('../assets/place1.png')} 
+           style={{ width: 120, height: 120 , color: 'white', marginBottom: 15 }} // 원하는 너비와 높이로 설정
+           />
           <Text style={styles.buttonText}>내 차량 위치 찾기</Text>
         </TouchableOpacity>
       </View>
@@ -53,20 +59,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    backgroundColor: 'lightblue',
+    backgroundColor: '#C9E7ED',
     padding: 15,
     marginVertical: 10,
     borderRadius: 10,
     width: 250,
-    height: 70,
+    height: 220,
     justifyContent: 'center', // 버튼 내에서 수직으로 가운데 정렬합니다.
     alignItems: 'center',
+    borderColor: 'lightblue',
+    borderWidth: 2
   },
   buttonText: {
     fontSize: 25,
     fontWeight: 'bold',
-    color: 'white',
+    color: '#333333',
     textAlign: 'center',
+    fontFamily: 'BlackHanSans_400Regular'
   },
 });
 

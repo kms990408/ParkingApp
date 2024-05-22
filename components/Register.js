@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert } from 'react-native';
+import { db } from '../firebaseConfig';
+import { doc, updateDoc } from 'firebase/firestore';
 
 export default function Register() {
   const [apartment, setApartment] = useState('');
@@ -13,19 +15,27 @@ export default function Register() {
     setCarNumber(text);
   };
 
-  const handleRegistration = () => {
-    // 등록 처리 로직 추가
-    console.log(`아파트 동: ${apartment}, 차량번호: ${carNumber}이(가) 등록되었습니다.`);
+  const handleRegistration = async () => {
+    try {
+      const carLicenseDocRef = doc(db, 'registered', 'car_license');
+      await updateDoc(carLicenseDocRef, { [apartment]: carNumber });
+      Alert.alert('등록 성공', `아파트 동: ${apartment}, 차량번호: ${carNumber}`);
+      setApartment(''); // 입력 후 입력 필드 초기화
+      setCarNumber(''); // 입력 후 입력 필드 초기화
+    } catch (error) {
+      console.error('차량 정보 등록 중 오류가 발생했습니다:', error);
+      Alert.alert('등록 실패', '차량 정보 등록 중 오류가 발생했습니다.');
+    }
   };
 
   return (
-    <View style={[styles.container,{ backgroundColor: 'white' }]}>
-      <Text style={styles.title}>등록차량 등록</Text>
+    <View style={styles.container}>
+      <Text style={styles.title}>등록<Text style={styles.title2}>차량</Text> 등록</Text>
       <TextInput
         style={styles.input}
         onChangeText={handleApartmentChange}
         value={apartment}
-        placeholder="아파트 동 입력"
+        placeholder="아파트 호수 입력"
         placeholderTextColor="lightblue"
       />
       <TextInput
@@ -47,12 +57,21 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+    backgroundColor: 'white',
   },
   title: {
-    fontSize: 30,
+    fontSize: 50,
     fontWeight: 'bold',
     marginBottom: 50,
     color: 'lightblue',
+    fontFamily: 'BlackHanSans_400Regular'
+  },
+  title2: {
+    fontSize: 70,
+    fontWeight: 'bold',
+    marginBottom: 50,
+    color: 'lightblue',
+    fontFamily: 'BlackHanSans_400Regular'
   },
   input: {
     height: 50,

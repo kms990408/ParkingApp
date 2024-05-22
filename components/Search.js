@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, TouchableWithoutFeedback } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Modal, TouchableWithoutFeedback, Image, ImageBackground } from 'react-native';
 import { getDatabase, ref, onValue } from '../firebaseConfig';
 
 const fetchParkingData = async (path) => {
@@ -59,7 +59,10 @@ export default function Search() {
 
   return (
     <View style={[styles.container, { backgroundColor: 'white' }]}>
-      <Text style={styles.title}>나의 차량 위치 찾기</Text>
+      <Text style={styles.title}>내  
+      <Text style={styles.vehicleText}> 차량 </Text> 
+      위치 찾기
+      </Text>
       <TextInput
         style={styles.input}
         onChangeText={handleTextChange}
@@ -79,6 +82,26 @@ export default function Search() {
         <View style={styles.modalContent}>
 
           {/* 모달 내용 */}
+          <View style={styles.topBoxesContainer}>
+              <View style={[styles.box, styles.lightGrayBackground]}>
+              {inputText === reg1 && <Image source={require('../assets/ping.png')} style={styles.image} />}
+                <Text style={styles.txt}>A1</Text>
+              </View>
+              <View style={[styles.box, styles.lightGrayBackground]}>
+              {inputText === reg2 && <Image source={require('../assets/ping.png')} style={styles.image} />}
+              <Text style={styles.txt}>A2</Text>
+              </View>
+            </View>
+            <View style={styles.topBoxesContainer}>
+              <View style={[styles.box, styles.lightGrayBackground]}>
+              {inputText === reg3 && <Image source={require('../assets/ping.png')} style={styles.image} />}
+              <Text style={styles.txt}>A3</Text>
+              </View>
+              <View style={[styles.box, styles.lightGrayBackground]}>
+              {inputText === reg4 && <Image source={require('../assets/ping.png')} style={styles.image} />}
+              <Text style={styles.txt}>A4</Text>
+              </View>
+            </View>
           <Text style={styles.modalText}>{modalContent}</Text>
 
           {/* 닫기 버튼 */}
@@ -103,6 +126,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 100,
     color: 'lightblue',
+    fontFamily: 'BlackHanSans_400Regular'
   },
   input: {
     height: 50,
@@ -113,6 +137,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginBottom: 20,
     color: 'black',
+    
   },
   button: {
     backgroundColor: 'lightblue',
@@ -123,6 +148,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'BlackHanSans_400Regular'
   },
   modalContainer: {
     flex: 1,
@@ -148,6 +174,8 @@ const styles = StyleSheet.create({
   modalText: {
     fontSize: 20,
     marginBottom: 20,
+    color: 'black',
+    fontFamily: 'BlackHanSans_400Regular'
   },
   closeButton: {
     backgroundColor: 'lightblue',
@@ -162,6 +190,39 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: 'white',
+    fontFamily: 'BlackHanSans_400Regular'
   },
+  topBoxesContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  box: {
+    width: 100,
+    height: 100,
+    marginHorizontal: 5,
+    borderColor: 'lightblue',
+    borderWidth: 2
+  },
+  lightGrayBackground: {
+    backgroundColor: 'gray',
+  },
+  txt: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: 'white',
+    textAlign:'center',
+    marginTop: 70,
+    fontFamily: 'BlackHanSans_400Regular'
+  },
+  image: {
+    width: 90,
+    height: 90,
+    marginBottom: -60,
+    marginTop: -30,
+    left: 3
+  },
+  vehicleText: {
+    fontSize: 65, // 차량 문자만 크게 만들기 위한 폰트 크기
+  }
 
 });
